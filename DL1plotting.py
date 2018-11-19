@@ -6,7 +6,7 @@ from scipy.stats import norm
 
 plt.ioff()
 
-def NSBAmpPE(NSBPE,NSB,v,PEm):
+def NSBAmpPE(pathdir,NSBPE,NSB,v,PEm):
     f4=plt.figure(4)
     plotpiccount=0
     readinarray=[0,1,2,3,4,5,7,8]
@@ -34,18 +34,18 @@ def NSBAmpPE(NSBPE,NSB,v,PEm):
         plt.xlabel("increasing PE")
         plt.ylabel("Decreasing NSB")
         plt.title('NSB, PE, amplitude')
-    plt.savefig(r'C:\Users\Jamie Williams\Desktop\New folder\d2018-10-04-TM-NSB\Plots\PEAgainstCharge_' + str(plotpiccount) + '_' + str(v) +'.png')
+    plt.savefig(pathdir+ r'\Plots\PEAgainstCharge_' + str(plotpiccount) + '_' + str(v) +'.png')
     return {'f4':f4, 'v':v}
-def PeakChargeAgainstPE(textreadin,chargecounttot,maxcharge):    #-------------Peak charge against PE
+def PeakChargeAgainstPE(pathdir,textreadin,chargecounttot,maxcharge):    #-------------Peak charge against PE
     plotpiccount=0
     f2=plt.figure(2)
     plt.plot(textreadin[2,0:(len(chargecounttot[0]))],maxcharge[0:(len(chargecounttot[0]))])
     plt.xlabel('PE')
     plt.ylabel('Max Charge (mVns)')
     plt.title('PE against Peak Charge')
-    plt.savefig(r'C:\Users\Jamie Williams\Desktop\New folder\d2018-10-04-TM-NSB\Plots\PEAgainstCharge_' + str(plotpiccount) + '.png')
+    plt.savefig(pathdir+ r'\Plots\PEAgainstCharge_' + str(plotpiccount) + '.png')
     return f2
-def ChargeAgainstPE(chargecounttot,alldata,maxcharge):    #--------------------Charge vs Amplitude
+def ChargeAgainstPE(pathdir,chargecounttot,alldata,maxcharge):    #--------------------Charge vs Amplitude
     plotpiccount=0
     f3=plt.figure(3)
     for d in range (0,len(chargecounttot[0])):
@@ -53,7 +53,7 @@ def ChargeAgainstPE(chargecounttot,alldata,maxcharge):    #--------------------C
     plt.xlabel('Amplitude (mV)')
     plt.ylabel('Peak Charge (mVns)')
     plt.title('Amplitude against Peak Charge')
-    plt.savefig(r'C:\Users\Jamie Williams\Desktop\New folder\d2018-10-04-TM-NSB\Plots\AmplitudeAgainstCharge_' + str(plotpiccount) + '.png')
+    plt.savefig(pathdir+ r'\Plots\AmplitudeAgainstCharge_' + str(plotpiccount) + '.png')
     return f3
 def gainmatchingsigmameanevent(alldata):    #for each pixel
     dim=len(alldata[0][0][0])
@@ -183,7 +183,7 @@ def ChargeDistPlot(charge,onlyone,chargecounttot):    #------------------------C
     if plotpic==1:
         plt.show()
     return {'f1':f1,'maxcharge':maxcharge,'max_ok':max_ok}
-def sigmagmineachpixel(sigmagm,v): #-------------------------------------------Variance in each gain matched pixel
+def sigmagmineachpixel(pathdir,sigmagm,v): #-------------------------------------------Variance in each gain matched pixel
     plotpic=1#0
     plt.ioff()
     f12 = plt.figure(figsize=(10, 10))     # size of plot
@@ -192,7 +192,7 @@ def sigmagmineachpixel(sigmagm,v): #-------------------------------------------V
     plt.colorbar(im)
     complete=1    
     plt.title('Gain Match Sigma in Each Pixel for Event %d' % v , fontsize=14)
-    plt.savefig(r'C:\Users\Jamie Williams\Desktop\New folder\d2018-10-04-TM-NSB\Plots\GMSigmaeachpixel_'+ str(v) + '.png')
+    plt.savefig(pathdir+ r'\Plots\GMSigmaeachpixel_'+ str(v) + '.png')
     if plotpic==1:
         f12.show()
     plt.close()
@@ -209,7 +209,7 @@ def meangmspgm(meangmsp,mvpe,h):   #-------------------------------------------D
         f15.show()
     plt.close()
     return {'f15':f15, 'h':h}
-def NSBmeangm(NSB,meangm):    #------------------------------------------------Mean gain matched amplitude against NSB 
+def NSBmeangm(pathdir,NSB,meangm):    #------------------------------------------------Mean gain matched amplitude against NSB 
     plotpiccount=0
     plotpic=1#0
     f20=plt.figure(20)
@@ -221,11 +221,11 @@ def NSBmeangm(NSB,meangm):    #------------------------------------------------M
     plt.ylabel('Amplitude (mV)',fontsize=14)
     complete=1
     plt.title('Amplitude against NSB',fontsize=24)
-    plt.savefig(r'C:\Users\Jamie Williams\Desktop\New folder\d2018-10-04-TM-NSB\Plots\NSBMeanAmp_'+ str(plotpiccount) + '.png')
+    plt.savefig(pathdir+ r'\Plots\NSBMeanAmp_'+ str(plotpiccount) + '.png')
     if plotpic==1:
         plt.show()
     return {'f20':f20,'complete':complete}
-def meangmineachpixel(meangm,v):      #----------------------------------------Gain Matched Amplitude for Each Pixel
+def meangmineachpixel(pathdir,meangm,v):      #----------------------------------------Gain Matched Amplitude for Each Pixel
     plotpic=1#0
     plt.ioff()
     f13 = plt.figure(figsize=(10, 10))     # size of plot
@@ -234,7 +234,7 @@ def meangmineachpixel(meangm,v):      #----------------------------------------G
     plt.colorbar(im) 
     complete=1
     plt.title('Mean Amplitude in Each Pixel for Event %d' % v , fontsize=14)
-    plt.savefig(r'C:\Users\Jamie Williams\Desktop\New folder\d2018-10-04-TM-NSB\Plots\MeanGMeachpixel_'+ str(v) + '.png')
+    plt.savefig(pathdir + r'\Plots\MeanGMeachpixel_'+ str(v) + '.png')
     if plotpic==1:
         f13.show()
     plt.close()
@@ -250,7 +250,7 @@ def meangmsp1(meangm,noevents):      #-----------------------------------------G
                 toy=(2*j)+1
                 meangmsp[i,j,h]=0.25*(meangm[fromx,fromy,h]+meangm[fromx,toy,h]+meangm[tox,fromy,h]+meangm[tox,toy,h])
     return meangmsp
-def meangmsp2(meangmsp,h):      #----------------------------------------------Gain Matched Amplitude for Each Super Pixel
+def meangmsp2(pathdir,meangmsp,h):      #----------------------------------------------Gain Matched Amplitude for Each Super Pixel
     plotpic=1#0
     f14 = plt.figure(figsize=(10, 10))     # size of plot
     f14.clear()
@@ -258,7 +258,7 @@ def meangmsp2(meangmsp,h):      #----------------------------------------------G
     im = ax.imshow(meangmsp[:,:,h], origin='lower')
     plt.colorbar(im)
     plt.title('Mean Gain Matched Super Pixel Amplitude for Event %d' % h , fontsize=14)
-    plt.savefig(r'C:\Users\Jamie Williams\Desktop\New folder\d2018-10-04-TM-NSB\Plots\MeanGMsuperpixel_'+ str(h) + '.png')
+    plt.savefig(pathdir + r'\Plots\MeanGMsuperpixel_'+ str(h) + '.png')
     if plotpic==1:
         f14.show()
     plt.close()

@@ -1,6 +1,5 @@
 #CODE TO READ IN DL1 FILES AND PLOT
 from CHECLabPy.core.io import DL1Reader
-#from IPython.display import display
 import numpy as np
 from matplotlib import pyplot as plt
 import os
@@ -325,12 +324,12 @@ if plot2==1 and plotchargehistogram==1: ########################################
     maxcharge=CDP['maxcharge']
     max_ok=CDP['max_ok']                 
 if textinputtype==2 and PCAPE==1 and cctok==1 and max_ok==1: ################### If PE read in and ok to be plot
-    DL1plotting.PeakChargeAgainstPE(textreadin,chargecounttot,maxcharge).show()
-    DL1plotting.ChargeAgainstPE(chargecounttot,alldata,maxcharge).show()
+    DL1plotting.PeakChargeAgainstPE(pathdir,textreadin,chargecounttot,maxcharge).show()
+    DL1plotting.ChargeAgainstPE(pathdir,chargecounttot,alldata,maxcharge).show()
 if NSBcount==9 and diffNSB==1: ################################################ OK
     #picplot=0
-    NSBAPE=DL1plotting.NSBAmpPE(NSBPE,NSB,1,PEm)
-    NSBMGM=DL1plotting.NSBmeangm(NSB,meangm)
+    NSBAPE=DL1plotting.NSBAmpPE(pathdir,NSBPE,NSB,1,PEm)
+    NSBMGM=DL1plotting.NSBmeangm(pathdir,NSB,meangm)
     if picplot==1:
         NSBAPE['f4'].show()
         NSBMGM['f20'].show
@@ -340,7 +339,7 @@ if gmsme==1:#sigmaineachpixela==1: ############################################ 
     vmax=len(sigmagm[0][0])
     for v in range (1,vmax):
         print('Sigma for Dataset ',v)
-        sgie=DL1plotting.sigmagmineachpixel(sigmagm,v)
+        sgie=DL1plotting.sigmagmineachpixel(pathdir,sigmagm,v)
         if picplot==1:
             sgie['f12'].show()
             sgie.clear
@@ -349,7 +348,7 @@ if gmsme==1:#meangmineachpixel==1: ############################################ 
     #picplot=0
     for v in range (1,vmax):
         print('Mean for Dataset ',v)
-        mgie=DL1plotting.meangmineachpixel(meangm,v)
+        mgie=DL1plotting.meangmineachpixel(pathdir,meangm,v)
         if picplot==1:
             mgie['f13'].show()
             mgie.clear
@@ -358,7 +357,7 @@ if meangmok==1 and gmsme==1: ################################################## 
     meangmsp=DL1plotting.meangmsp1(meangm,vmax)
     for v in range (0,vmax): 
         print('Mean Superpixels for Dataset ',v) 
-        DL1plotting.meangmsp2(meangmsp,v)['f14'].show()
+        DL1plotting.meangmsp2(pathdir,meangmsp,v)['f14'].show()
     meangmspgmok=1
 if meangmspgmok==1: ########################################################### OK
     gm=200
